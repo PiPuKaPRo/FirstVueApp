@@ -1,18 +1,18 @@
 <template>
   <div class="calculator">
-    <Display :displayValue="displayValue" />
-    <ButtonPanel @buttonClick="handleButtonClick" />
+    <DisplayA :displayValue="displayValue" />
+    <ButtonPanel @buttonClick="handleButtonClick" @panelClick="handlePanelClick" />
   </div>
 </template>
   
 <script>
 import ButtonPanel from './ButtonPanel.vue';
-import Display from './DisplayA.vue';
+import DisplayA from './DisplayA.vue';
 
 export default {
   components: {
     ButtonPanel,
-    Display,
+    DisplayA,
   },
   data() {
     return {
@@ -29,11 +29,14 @@ export default {
         }
       } else if (label === 'C') {
         this.displayValue = '0';
-      } else if (this.displayValue === '0') {
+      } else if (this.displayValue === '0' || this.displayValue === 'Error') {
         this.displayValue = label;
       } else {
         this.displayValue += label;
       }
+    },
+    handlePanelClick(event) {
+      event.stopPropagation();
     },
   },
 };
@@ -49,10 +52,4 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
-
-.calculator-button {}
-
-.button-panel {}
-
-.calculator-display {}
 </style>
